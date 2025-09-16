@@ -1,6 +1,7 @@
 
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class NewMonoBehaviourScript : MonoBehaviour
@@ -21,18 +22,23 @@ public class NewMonoBehaviourScript : MonoBehaviour
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
 
-        Vector2 direction = (mousePos - transform.position);
-        float distance = direction.magnitude;
+        float targetX = mousePos.x;
+        float currentX = transform.position.x;
+        float distance = Mathf.Abs(targetX - currentX);
 
         if (distance > stopDistance)
         {
-            direction.Normalize();
-            Vector2 newPosition = (Vector2)transform.position + direction * moveSpeed * Time.fixedDeltaTime;
+            float directionX = Mathf.Sign(targetX - currentX);
+            Vector2 newPosition = new Vector2(
+                currentX + directionX * moveSpeed * Time.fixedDeltaTime,
+                rb.position.y
+            );
+
             rb.MovePosition(newPosition);
         }
         else
         {
-            rb.linearVelocity = Vector2.zero;
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
         }
 
     }
