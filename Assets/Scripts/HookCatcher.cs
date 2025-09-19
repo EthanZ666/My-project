@@ -16,6 +16,8 @@ public class HookController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector3 startPos;
+
+    private int money;
     private bool isDropping = false;
     private bool isRising = false;
     private List<Fish> caughtFishList = new List<Fish>();
@@ -112,6 +114,7 @@ public class HookController : MonoBehaviour
             {
                 if (f != null)
                 {
+                    Debug.Log($"Selling fish {f.name}, value = {f.value}");
                     total += f.value;
                     Destroy(f.gameObject);
                 }
