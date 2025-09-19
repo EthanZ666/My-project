@@ -23,24 +23,28 @@ public class SettingsMenu : MonoBehaviour
         if (fullscreenToggle != null) fullscreenToggle.isOn = savedFullscreen;
     }
 
+    // Opens the settings panel
     public void OpenSettings()
     {
         if (settingsPanel != null)
             settingsPanel.SetActive(true);
     }
 
+    // Closes the settings panel
     public void CloseSettings()
     {
         if (settingsPanel != null)
             settingsPanel.SetActive(false);
     }
 
+    // Sets the volume and saves the preference
     public void SetVolume(float volume)
     {
         AudioListener.volume = volume;
         PlayerPrefs.SetFloat("volume", volume);
     }
 
+    // Sets fullscreen mode and saves the preference
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
