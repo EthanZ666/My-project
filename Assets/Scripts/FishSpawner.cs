@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FishSpawner : MonoBehaviour
@@ -40,13 +41,21 @@ public class FishSpawner : MonoBehaviour
             Vector3 spawnPos = new Vector3(X, Y, 0);
 
             GameObject fish = Instantiate(prefab, spawnPos, Quaternion.identity);
-            
+
             layer.currentFish++;
 
             FishTracker tracker = fish.AddComponent<FishTracker>();
             tracker.layer = layer;
         }
 
+    }
+    public void SpawnAllLayers()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+        Spawnfish();
     }
 
     // Update is called once per frame

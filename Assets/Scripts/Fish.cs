@@ -9,11 +9,13 @@ public class Fish : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
+    [HideInInspector] public Vector3 originalScale;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        originalScale = transform.localScale;
     }
     void Update()
     {
