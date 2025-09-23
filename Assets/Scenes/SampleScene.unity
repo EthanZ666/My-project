@@ -2370,8 +2370,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Gauge
   gaugeObj: {fileID: 1346274831}
   hookObj: {fileID: 1443052551}
-  moveDistance: 13
-  moveSpeed: 5
+  moveDistance: 10.5
+  moveSpeed: 3
   howfardown: -50
 --- !u!61 &1346274835
 BoxCollider2D:
