@@ -6,6 +6,7 @@ using Unity.VisualScripting; // needed for List
 public class HookController : MonoBehaviour
 {
     public Transform hookTip;             // empty child at tip of hook
+    public GameObject depthObj;            // assign your "hook" GameObject in Inspector
     public float dropDepth = -10f;        // how far down the hook goes
     public float dropSpeed = 10f;         // speed going down
     public float riseSpeed = 5f;          // speed going up
@@ -21,6 +22,8 @@ public class HookController : MonoBehaviour
     private bool isDropping = false;
     private bool isRising = false;
     private List<Fish> caughtFishList = new List<Fish>();
+    
+    public bool movinghook = false; // Gauge reads this
 
     void Awake()
     {
@@ -31,15 +34,23 @@ public class HookController : MonoBehaviour
     void Update()
     {
         // Drop hook
+        dropDepth = depthObj.GetComponent<Gauge>().howfardown;
         if (Input.GetKeyDown(KeyCode.Space) && !isDropping && !isRising)
         {
             isDropping = true;
+            movinghook = true;
         }
 
         // Sell fish (only at start position & not dropping/rising)
         if (Input.GetKeyDown(KeyCode.S) && caughtFishList.Count > 0 && !isDropping && !isRising)
         {
             SellFish();
+            riseSpeed = 15f; // reset rise speed
+            movinghook = false;
+        }
+        if (caughtFishList.Count >= maxCaughtFish)
+        {
+            riseSpeed = 45f; // faster rise if full
         }
     }
 
@@ -54,6 +65,7 @@ public class HookController : MonoBehaviour
             {
                 isDropping = false;
                 isRising = true;
+                movinghook = true;
             }
         }
         else if (isRising)
@@ -69,6 +81,7 @@ public class HookController : MonoBehaviour
             {
                 // Reset at top
                 isRising = false;
+                movinghook = false;
                 transform.position = startPos;
                 rb.linearVelocity = Vector2.zero;
             }
